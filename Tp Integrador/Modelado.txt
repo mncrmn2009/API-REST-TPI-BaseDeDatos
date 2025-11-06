@@ -1,0 +1,105 @@
+ceatedAt (Guarda fecha y hora al crearlo)- timestamps en mongoose
+slug - (VVersion legible y amigable para URLs)
+Ejemplo de uso:
+
+URL REST:
+GET /api/productos/auriculares-gamer-hyperx
+en lugar de
+GET /api/productos/67df3982b2a...
+
+updatedAt (Guarda fecha y hora de la ultima modificacion)
+
+snapshot - (Copia del estado de ciertos datos en un momento especifico)
+Ejemplo:
+conservar el precio que tenía al momento de la compra.
+
+{
+    usuario:
+        id: number
+        nombre: string
+        email: string (Indice)
+        password: hash
+        direccion: string [] (Embebido)
+        telefono: string
+        rol: clientes o admin (ENUM)
+            Campo: rol
+            Tipo: texto (string)
+            Valores posibles: "admin" o "cliente" (con minúsculas consistentes)
+            Valor por defecto: "cliente"
+}
+{
+    Productos:
+        id: number
+        nombre: string (Indice: texto en nombre)
+        descripcion: string
+        categoria: idCategoria (Referencia) (Indice)
+        precio: double (Indice)
+        stock: number
+        reseña: IdReseña (Referencia)
+        ratingPromedio : $AVG
+        totalReseñas: cant $COUNT
+
+}
+
+{
+    Categorias:
+        id: number
+        nombre: string
+        descripcion: string
+        productos [] (Referencia) - slug
+}
+
+{
+    Pedidos (Orders):
+        id: number
+        fecha: date
+        estado: enum ()
+
+        | Estado        | Significado                                 |
+| ------------- | ------------------------------------------- |
+| `"pendiente"` | Pedido generado pero no procesado aún.      |
+| `"pagado"`    | El pago fue confirmado.                     |
+| `"enviado"`   | Pedido despachado al cliente.               |
+| `"entregado"` | Pedido recibido por el cliente.             |
+| `"cancelado"` | Pedido anulado por el usuario o el sistema. |
+    defecto: pendiente
+
+        total: double
+        metodo de pago: ENUM
+
+        | Método            | Descripción                                   |
+| ----------------- | --------------------------------------------- |
+| `"tarjeta"`       | Pago con tarjeta de crédito o débito.         |
+| `"transferencia"` | Pago por transferencia bancaria.              |
+| `"efectivo"`      | Pago contra entrega o en sucursal.            |
+| `"mercadopago"`   | Integración con pasarela externa (si aplica). |
+
+
+| Campo           | Tipo   | Enum                                                       | Descripción                    |
+| --------------- | ------ | ---------------------------------------------------------- | ------------------------------ |
+| `status`        | String | `["pendiente","pagado","enviado","entregado","cancelado"]` | Controla el estado del pedido. |
+| `paymentMethod` | String | `["tarjeta","efectivo","transferencia","mercadopago"]`     | Define el medio de pago usado. |
+
+
+
+        items: [{productSnapshot: {productId, nombre, precioAlComprar}, cant, subtotal}]
+        direccionEnvio (snapshot). ?? (Guardarlo??)
+        usuario (cliente): IdUsuario (Referencia)(DATOS) Nombre, id, direccion
+}
+{
+    Carritos (Carts):
+        id: number
+        usuario: IdUsuario (Referencia) (Indice)
+        item: [{productoID, cantidad}]
+        
+}
+
+{
+    Reseñas(Reviews):
+        id: number 
+        calificacion: number #
+        comentario: string
+        usuario: IdUsuario (Referencia)
+        producto: IdProducto (Referencia)
+        corroborar que compro para crear reseña
+}
