@@ -12,11 +12,20 @@ conexionDB();
 //Parsear los cuerpos de las peticiones
 app.use(express.json());
 
-//ruta de prueba
-app.get("/",(req,res)=>{
-    res.send("Servidor funcionando");
+//Rutas
+app.use ("/api/usuarios", usuarioRoutes);
+
+app.get("/", (req, res) => {
+    res.send("Servidor y base de datos funcionando");
+})
+
+app.use((err, req, res, next) => {
+  const statusCode = err.status || 500;
+  res.status(statusCode).json({
+    error: err.message || "Error interno del servidor",
+  });
 });
-//levantar el servidor
-app.listen(PORT, ()=>{
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+
+app.listen(PORT, () => {
+    console.log ("Servidor escuchando...");
 });
