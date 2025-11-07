@@ -18,6 +18,6 @@ export const hashPassword = async (password) => {
  * @returns {Promise<boolean>}
  */
 
-export const verificarPassword = async (passwordPlano, hashGuardado) => {
+export const compararPassword = async (passwordPlano, hashGuardado) => {
   return await bcrypt.compare(passwordPlano, hashGuardado);
 };

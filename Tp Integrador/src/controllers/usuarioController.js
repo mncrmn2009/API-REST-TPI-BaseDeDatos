@@ -1,5 +1,6 @@
 import { Usuario } from "../models/usuario.js"
 import { manejarError } from "../utils/manejarError.js";
+import { hashPassword } from "../services/password.service.js";
 
 export const listarUsuarios = async (req, res, next) => {
     try {
@@ -31,13 +32,34 @@ export const obtenerUsuarioPorId = async (req, res, next) => {
 };
 
 export const crearUsuario = async (req, res, next) => {
-    try {
-        const nuevoUsuario = await Usuario.create(req.body);
-        res.status(201).json({ mensaje: "Usuario creado correctamente", usuario: nuevoUsuario});
-    } catch (error) {
-        next(manejarError(error, "Error al crear el usuario"))
-    }
+  try {
+    const { nombre, email, password, telefono, rol, direcciones } = req.body;
 
+    // 🔹 Hashear la contraseña antes de guardarla
+    const passwordHasheado = await hashPassword(password);
+
+    const nuevoUsuario = await Usuario.create({
+      nombre,
+      email,
+      password: passwordHasheado,
+      telefono,
+      rol,
+      direcciones,
+    });
+
+    res.status(201).json({
+      mensaje: "Usuario creado correctamente",
+      usuario: {
+        id: nuevoUsuario._id,
+        nombre: nuevoUsuario.nombre,
+        email: nuevoUsuario.email,
+        rol: nuevoUsuario.rol,
+      },
+    });
+  } catch (error) {
+    error.message = "Error al crear el usuario";
+    next(error);
+  }
 };
 
 export const eliminarUsuario = async (req, res, next) => {
