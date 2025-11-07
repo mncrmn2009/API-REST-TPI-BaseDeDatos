@@ -13,15 +13,18 @@ const usuarioModel = mongoose.Schema(
         },
         direcciones:[
             {
+                _id: false,
                 calle: {type: String},
+                numero: {type: Number},
                 ciudad: {type: String},
                 provincia: {type: String},
-                pais: {type: String}
+                
             }
         ]
     },
         {
-            timestamps: true // Guardar hora y fecha al crearlo y editarlo
+            timestamps: true, // Guardar hora y fecha al crearlo y editarlo
+            versionKey: false //Oculta el campo __v
         }
 );
 export const Usuario = mongoose.model("Usuario", usuarioModel);
