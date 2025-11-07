@@ -29,7 +29,7 @@ conservar el precio que tenía al momento de la compra.
 }
 {
     Productos:
-        id: number
+        id: 
         nombre: string (Indice: texto en nombre)
         descripcion: string
         categoria: idCategoria (Referencia) (Indice)
