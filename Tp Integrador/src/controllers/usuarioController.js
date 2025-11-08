@@ -62,6 +62,45 @@ export const crearUsuario = async (req, res, next) => {
   }
 };
 
+export const actualizarUsuario = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { nombre, email, telefono, rol, direcciones } = req.body;
+
+    if (!nombre && !email && !telefono && !rol && !direcciones) {
+      const error = new Error("Debe proporcionar al menos un campo para actualizar");
+      error.status = 400;
+      return next(error);
+    }
+
+    const usuarioActualizado = await Usuario.findByIdAndUpdate(
+      id,
+      { nombre, email, telefono, rol, direcciones },
+      { new: true, runValidators: true }
+    );
+
+    if (!usuarioActualizado) {
+      const error = new Error("Usuario no encontrado para actualizar");
+      error.status = 404;
+      return next(error);
+    }
+
+    res.status(200).json({
+      mensaje: "Usuario actualizado correctamente",
+      usuario: usuarioActualizado,
+    });
+  } catch (error) {
+    if (error.name === "CastError") {
+      error.status = 400;
+      error.message = "El ID proporcionado no es válido";
+    } else {
+      error.status = 500;
+      error.message = "Error al actualizar el usuario";
+    }
+    next(error);
+  }
+};
+
 export const eliminarUsuario = async (req, res, next) => {
     try {
         const usuarioEliminado = await Usuario.findByIdAndDelete(req.params.id);

@@ -2,7 +2,8 @@ import express from "express";
 import { conexionDB } from "./config/database.js"
 import dotenv from "dotenv";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
-import authRoutes from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
+import categoriaRoutes from "./routes/categoriaRoutes.js";
 
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 //Rutas
 app.use ("/api/usuarios", usuarioRoutes);
 app.use("/api", authRoutes);
+app.use("/api/categorias", categoriaRoutes);
 
 app.get("/", (req, res) => {
     res.send("Servidor y base de datos funcionando");
