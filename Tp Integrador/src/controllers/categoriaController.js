@@ -1,4 +1,5 @@
 import { Categoria } from "../models/categoria.js";
+import { manejarError } from "../utils/manejarError.js";
 
 export const listarCategorias = async (req, res, next) => {
   try {
@@ -10,9 +11,7 @@ export const listarCategorias = async (req, res, next) => {
 
     res.status(200).json(categorias);
   } catch (error) {
-    error.status = 500;
-    error.message = "Error al obtener las categorías";
-    next(error);
+    next(manejarError(error, "Error al obtener las categorias"));
   }
 };
 
@@ -28,14 +27,7 @@ export const obtenerCategoriaPorId = async (req, res, next) => {
 
     res.status(200).json(categoria);
   } catch (error) {
-    if (error.name === "CastError") {
-      error.status = 400;
-      error.message = "El ID proporcionado no es válido";
-    } else {
-      error.status = 500;
-      error.message = "Error al buscar la categoría";
-    }
-    next(error);
+    next(manejarError(error, "Error al buscar la categoria"));
   }
 };
 
@@ -61,9 +53,7 @@ export const crearCategoria = async (req, res, next) => {
       .status(201)
       .json({ mensaje: "Categoría creada correctamente", categoria: nuevaCategoria });
   } catch (error) {
-    error.status = 500;
-    error.message = "Error al crear la categoría";
-    next(error);
+    next(manejarError(error, "Error al crear la categoria"));
   }
 };
 
@@ -89,14 +79,7 @@ export const actualizarCategoria = async (req, res, next) => {
       .status(200)
       .json({ mensaje: "Categoría actualizada correctamente", categoria: categoriaActualizada });
   } catch (error) {
-    if (error.name === "CastError") {
-      error.status = 400;
-      error.message = "El ID proporcionado no es válido";
-    } else {
-      error.status = 500;
-      error.message = "Error al actualizar la categoría";
-    }
-    next(error);
+    next(manejarError(error, "Error al actualizar la categoria"));
   }
 };
 
@@ -112,13 +95,6 @@ export const eliminarCategoria = async (req, res, next) => {
 
     res.status(200).json({ mensaje: "Categoría eliminada correctamente" });
   } catch (error) {
-    if (error.name === "CastError") {
-      error.status = 400;
-      error.message = "El ID proporcionado no es válido";
-    } else {
-      error.status = 500;
-      error.message = "Error al eliminar la categoría";
-    }
-    next(error);
+    next(manejarError(error, "Error al eliminar la categoria"));
   }
 };
