@@ -2,7 +2,7 @@ import { Carrito } from "../models/carrito.js";
 import { Producto } from "../models/producto.js";
 import { manejarError } from "../utils/manejarError.js";
 
-export const obtenerCarrito = async (req, res) => {
+export const obtenerCarrito = async (req, res, next) => {
     try {
         const {usuarioId} = req.params;
         const carrito = await Carrito.findOne({ usuario: usuarioId }).populate('productos.producto');
@@ -16,7 +16,7 @@ export const obtenerCarrito = async (req, res) => {
     }
 };
 
-export const agregarAlCarrito = async (req, res) => {
+export const agregarAlCarrito = async (req, res, next) => {
     try {
         const { usuarioId } = req.params;
         const { productoId, cantidad } = req.body;
@@ -47,7 +47,7 @@ export const agregarAlCarrito = async (req, res) => {
     }  
 };
 
-export const EliminarDelCarrito = async (req, res) => {
+export const EliminarDelCarrito = async (req, res, next) => {
     try {
         const {usuarioId, productoId} = req.params;
 
@@ -66,7 +66,7 @@ export const EliminarDelCarrito = async (req, res) => {
     }
 };
 
-export const VaciarCarrito = async (req, res) => {
+export const VaciarCarrito = async (req, res, next) => {
     try {
         const { usuarioId } = req.params;
         const carrito = await Carrito.findOneAndUpdate(
@@ -84,7 +84,7 @@ export const VaciarCarrito = async (req, res) => {
     }
 };
 
-export const totalCarrito = async (req, res) => {
+export const totalCarrito = async (req, res, next) => {
     try {
         const { usuarioId } = req.params;
         const carrito = await Carrito.findOne({ usuario: usuarioId }).populate('productos.producto');
