@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import categoriaRoutes from "./routes/categoriaRoutes.js";
 import productoRoutes from "./routes/productoRoutes.js";
 import resenaRoutes from "./routes/resenaRoutes.js";
+import carritoRoutes from "./routes/carritoRoutes.js";
 
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use("/api", authRoutes);
 app.use("/api/categorias", categoriaRoutes);
 app.use("/api/productos", productoRoutes);
 app.use("/api/resenas", resenaRoutes);
+app.use("/api/carrito", carritoRoutes);
 
 app.get("/", (req, res) => {
     res.send("Servidor y base de datos funcionando");
