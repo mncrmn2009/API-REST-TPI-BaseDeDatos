@@ -15,7 +15,7 @@ export const generarToken = (usuario) => {
     rol: usuario.rol,
   };
 
-  return jwt.sign(datosUsuario, secret, { expiresIn: "1h" });
+  return jwt.sign(datosUsuario, secret, { expiresIn: "24h" });
 };
 
 /**

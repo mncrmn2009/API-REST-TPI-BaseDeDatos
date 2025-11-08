@@ -17,6 +17,6 @@ const ProductoModel = mongoose.Schema({
 
 // Índice de texto para búsqueda por nombre, descripción y marca en una sola consulta
 
-ProductoSchema.index({ nombre: "text", descripcion: "text", brand: "text" });
+ProductoModel.index({ nombre: "text", descripcion: "text", marca: "text" });
 
 export const Producto = mongoose.model('Producto', ProductoModel);
