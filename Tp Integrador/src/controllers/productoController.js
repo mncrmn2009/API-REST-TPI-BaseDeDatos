@@ -86,6 +86,7 @@ export const actualizarStock = async (req, res, next) => {
 
 export const obtenerProductoPorId = async (req, res, next) => {
   try {
+    //populate = para traer la info del ID
     const producto = await Producto.findById(req.params.id).populate("categoria", "nombre descripcion");
 
     if (!producto) {
