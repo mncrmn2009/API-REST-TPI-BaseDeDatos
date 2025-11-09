@@ -23,8 +23,8 @@ router.patch("/:id/stock", authMiddleware, isAdmin, actualizarStock);
 // POST /api/productos → crear producto (solo admin)
 router.post("/", authMiddleware, isAdmin, crearProducto);
 
-// PUT /api/productos/:id → actualizar producto (solo admin)
-router.put("/:id", authMiddleware, isAdmin, actualizarProducto);
+// PATCH /api/productos/:id → actualizar producto (solo admin)
+router.patch("/:id", authMiddleware, isAdmin, actualizarProducto);
 
 // DELETE /api/productos/:id → eliminar producto (solo admin)
 router.delete("/:id", authMiddleware, isAdmin, eliminarProducto);

@@ -1,13 +1,7 @@
 import express from "express";
 import { conexionDB } from "./config/database.js"
 import dotenv from "dotenv";
-import usuarioRoutes from "./routes/usuarioRoutes.js";
-import authRoutes from "./routes/authRoutes.js";
-import categoriaRoutes from "./routes/categoriaRoutes.js";
-import productoRoutes from "./routes/productoRoutes.js";
-import resenaRoutes from "./routes/resenaRoutes.js";
-import carritoRoutes from "./routes/carritoRoutes.js";
-import pedidoRoutes from "./routes/pedidoRoutes.js";
+import configurarRutas from "./routes/index.js";
 
 
 dotenv.config();
@@ -21,13 +15,7 @@ conexionDB();
 app.use(express.json());
 
 //Rutas
-app.use ("/api/usuarios", usuarioRoutes);
-app.use("/api", authRoutes);
-app.use("/api/categorias", categoriaRoutes);
-app.use("/api/productos", productoRoutes);
-app.use("/api/resenas", resenaRoutes);
-app.use("/api/carrito", carritoRoutes);
-app.use("/api/pedidos", pedidoRoutes);
+configurarRutas(app);
 
 app.get("/", (req, res) => {
     res.send("Servidor y base de datos funcionando");

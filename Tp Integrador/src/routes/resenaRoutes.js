@@ -1,5 +1,5 @@
 import express from "express";
-import { crearResena, listarResenasPorProducto, obtenerTopProductos, actualizarResena, eliminarResena, } from "../controllers/resenaController.js";
+import { listarResenas, crearResena, listarResenasPorProducto, obtenerTopProductos, actualizarResena, eliminarResena, } from "../controllers/resenaController.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { isAdmin } from "../middlewares/isAdmin.middleware.js";
 
@@ -14,10 +14,13 @@ router.get("/producto/:productoId", listarResenasPorProducto);
 // POST /api/resenas → crear reseña (solo usuarios autenticados)
 router.post("/", authMiddleware, crearResena);
 
-// PUT /api/resenas/:id → actualizar reseña (dueño o admin)
-router.put("/:id", authMiddleware, actualizarResena);
+// PATCH /api/resenas/:id → actualizar reseña (dueño o admin)
+router.patch("/:id", authMiddleware, actualizarResena);
 
 // DELETE /api/resenas/:id → eliminar reseña (dueño o admin)
 router.delete("/:id", authMiddleware, eliminarResena);
+
+// GET Listar todas las reseñas
+router.get("/", listarResenas);
 
 export default router;

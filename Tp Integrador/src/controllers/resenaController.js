@@ -49,9 +49,9 @@ export const crearResena = async (req, res, next) => {
 
 export const listarResenasPorProducto = async (req, res, next) => {
   try {
-    const { productId } = req.params;
+    const { productoId } = req.params;
 
-    const resenas = await Resena.find({ producto: productId })
+    const resenas = await Resena.find({ producto: productoId })
       .populate("usuario", "nombre email")
       .populate("producto", "nombre marca precio");
 
@@ -146,3 +146,20 @@ export const eliminarResena = async (req, res, next) => {
     next(manejarError(error, "Error al eliminar la reseña"));
   }
 };
+
+export const listarResenas = async (req, res, next) => {
+  try {
+    const resenas = await Resena.find()
+      .populate("usuario", "nombre email")
+      .populate("producto", "nombre marca precio");
+
+    if (resenas.length === 0) {
+      return res.status(204).json({ mensaje: "No hay reseñas registradas" });
+    }
+
+    res.status(200).json(resenas);
+  } catch (error) {
+    next(manejarError(error, "Error al listar todas las reseñas"));
+  }
+};
+

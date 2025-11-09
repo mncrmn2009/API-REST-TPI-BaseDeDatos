@@ -9,7 +9,7 @@ router.get("/", listarCategorias);           // Obtener todas
 router.get("/:id", obtenerCategoriaPorId);   // Obtener por ID
 
 router.post("/", authMiddleware, isAdmin, crearCategoria);            // Crear nueva
-router.put("/:id", authMiddleware, isAdmin, actualizarCategoria);     // Actualizar existente
+router.patch("/:id", authMiddleware, isAdmin, actualizarCategoria);     // Actualizar existente
 router.delete("/:id", authMiddleware, isAdmin, eliminarCategoria);    // Eliminar
 
 export default router;
